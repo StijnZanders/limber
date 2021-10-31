@@ -23,11 +23,13 @@ jobs:
           export_default_credentials: true
       - name: Set-up cdktf
         run: |
-          npm install -g cdktf-cli
+          npm install --global cdktf-cli
+      - name: Get cdktf dependencies
+        run: |
           cd limber
           cdktf get
       - name: Limber plan
-        id: limebr-plan
+        id: limber-plan
         run: make limber-plan
       - name: Terraform plan
         id: plan
