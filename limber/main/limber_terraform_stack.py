@@ -1,11 +1,14 @@
 from constructs import Construct
-from cdktf import TerraformStack
+from cdktf import TerraformStack, TerraformVariable, Token
 from limber.imports.google import (
     GoogleProvider,
     StorageBucket,
+    SecretManagerSecret,
+    SecretManagerSecretVersion
 )
 import os
 import glob
+import json
 import importlib
 import sys
 import hashlib
@@ -29,7 +32,40 @@ class LimberTerraformStack(TerraformStack):
             location=cloud_storage_bucket_location
         )
 
+        self.get_secrets()
         self.create_terraform_configuration()
+
+    def get_secrets(self):
+
+        secrets = json.loads(os.environ["TERRAFORM_SECRETS"])
+
+        for secret_name in secrets:
+
+            secret_id = f"{secret_name}-secret"
+            secret_version = f"{secret_name}-version"
+
+            secret = SecretManagerSecret(
+                self,
+                secret_id,
+                secret_id=secret_id,
+                replication={
+                    "automatic": True
+                }
+            )
+
+            variable = TerraformVariable(
+                self,
+                secret_name,
+                type="string",
+                sensitive=True,
+            )
+
+            SecretManagerSecretVersion(
+                self,
+                secret_version,
+                secret=secret.id,
+                secret_data=variable.string_value,
+            )
 
     def create_terraform_configuration(self):
 
