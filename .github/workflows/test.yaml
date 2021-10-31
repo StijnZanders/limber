@@ -43,9 +43,10 @@ jobs:
           script: |
             const output = `
             <details><summary>Show Plan</summary>
+
             \`\`\`\n
             ${process.env.PLAN}
-            \`\`\`
+            \`\`\`\n
             </details>
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
             github.issues.createComment({

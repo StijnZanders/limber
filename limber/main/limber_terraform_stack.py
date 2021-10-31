@@ -24,14 +24,14 @@ class LimberTerraformStack(TerraformStack):
         self.folder = folder
 
         GoogleProvider(self, id=ns, region=region, project=project_id)
-        """
+
         self.storage_bucket = StorageBucket(
             self,
             "cloud_storage_bucket",
             name=cloud_storage_bucket,
             location=cloud_storage_bucket_location
         )
-        """
+
         self.get_secrets()
         self.create_terraform_configuration()
 
@@ -70,7 +70,7 @@ class LimberTerraformStack(TerraformStack):
     def create_terraform_configuration(self):
 
         top_level_dags = self._get_objects(DAG)
-        #self._get_terraform_configuration_dags(top_level_dags)
+        self._get_terraform_configuration_dags(top_level_dags)
 
     def _get_terraform_configuration_dags(self, dags) -> None:
 
@@ -80,8 +80,8 @@ class LimberTerraformStack(TerraformStack):
             tasks = self._get_objects(Operator)
             dag_tasks = [task for task in tasks if task.dag.dag_id == dag.dag_id]
 
-            #for task in dag_tasks:
-            #    task.get_terraform_json(stack=self, folder=self.folder, cloud_storage_bucket=self.storage_bucket)
+            for task in dag_tasks:
+                task.get_terraform_json(stack=self, folder=self.folder, cloud_storage_bucket=self.storage_bucket)
 
     def _get_objects(self, object_type) -> []:
 
