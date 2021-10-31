@@ -12,7 +12,9 @@ deploy-to-pypi:
 install-locally:
 	python -m pip install -e ~/git/limber/
 
-tf-plan:
+limber-plan:
 	limber plan
 	terraform -chdir=cdktf.out/stacks/limber init
+
+tf-plan:
 	terraform -chdir=cdktf.out/stacks/limber plan -no-color
