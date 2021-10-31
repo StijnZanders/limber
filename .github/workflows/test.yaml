@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          python -m pip install -e /home/runner/work/limber
+          python -m pip install -e /home/runner/work
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
       - name: Test Limber
