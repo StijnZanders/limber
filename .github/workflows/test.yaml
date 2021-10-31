@@ -23,6 +23,7 @@ jobs:
           export_default_credentials: true
       - name: Set-up cdktf
         run: |
+          npm install -g cdktf-cli
           cd limber
           cdktf get
       - name: Limber plan
