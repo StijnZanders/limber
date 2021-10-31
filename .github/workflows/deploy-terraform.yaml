@@ -1,0 +1,40 @@
+name: Deploy Terraform
+
+on:
+    push:
+        branches:
+          - master
+
+jobs:
+  deploy-terraform:
+    name: Deploy Terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install -e .
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+      - name: Setup cdktf
+        run: |
+          npm install --global cdktf-cli
+      - name: Get cdktf dependencies
+        run: |
+          cd limber
+          cdktf get
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Limber plan
+        id: limber-plan
+        run: make limber-plan
+      - name: Terraform apply
+        id: plan
+        run: make tf-apply

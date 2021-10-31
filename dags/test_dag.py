@@ -1,5 +1,5 @@
-from limber.models.dag import DAG
-from limber.operators.python_operator import PythonOperator
+from limber.main.dag.dag import DAG
+from limber.operators.python_operator.python_operator import PythonOperator
 from plugins.test_utils import test, test_multiple_outputs, test_with_context
 
 default_args = {

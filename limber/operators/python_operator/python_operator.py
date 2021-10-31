@@ -1,10 +1,15 @@
 import os
-from ..models.operator import Operator
+from limber.operators.operator import Operator
 import inspect
 import shutil
 import hashlib
 import zipfile
 import stat
+from limber.imports.google import (
+    CloudfunctionsFunction,
+    StorageBucketObject,
+    PubsubTopic,
+)
 
 class PythonOperator(Operator):
 
@@ -131,7 +136,7 @@ class PythonOperator(Operator):
         publish_future = publisher.publish(topic_path, data=message_bytes)
         publish_future.result()
 
-    def get_terraform_json(self, *, folder) -> {}:
+    def get_terraform_json(self, *, stack, folder, cloud_storage_bucket):
 
         hash = self._write_cloud_function_code(folder=folder)
 
@@ -142,38 +147,35 @@ class PythonOperator(Operator):
         else:
             trigger_resource = f"dag_{self.dag.dag_id}"
 
-        configuration = {
-            "resource": {
-                "google_storage_bucket_object": {
-                    f"task_{self.task_id}": {
-                        "name": f"{source_dir}_{hash}.zip",
-                        "bucket": "${google_storage_bucket.bucket.name}",
-                        "source": f"{source_dir}.zip"
-                    }
-                },
-                "google_cloudfunctions_function": {
-                    f"function_{self.task_id}": {
-                        "name": f"{self.dag.dag_id}-{self.task_id}",
-                        "description": self.description,
-                        "runtime": "python37",
-                        "available_memory_mb": self.memory,
-                        "timeout": self.timeout,
-                        "service_account_email": os.environ["CLOUD_FUNCTIONS_SERVICE_ACCOUNT_EMAIL"],
-                        "source_archive_bucket": "${google_storage_bucket.bucket.name}",
-                        "source_archive_object": "${google_storage_bucket_object.task_"+self.task_id+".name}",
-                        "event_trigger": {
-                            "event_type": "providers/cloud.pubsub/eventTypes/topic.publish",
-                            "resource": trigger_resource
-                        },
-                        "entry_point": "cloudfunction_execution"
-                    }
-                },
-                "google_pubsub_topic": {
-                    f"task_{self.dag.dag_id}_{self.task_id}": {
-                        "name": f"task_{self.dag.dag_id}_{self.task_id}"
-                    }
-                }
-            }
-        }
+        PubsubTopic(
+            stack,
+            f"task_{self.dag.dag_id}_{self.task_id}",
+            name=f"task_{self.dag.dag_id}_{self.task_id}",
+        )
 
-        return configuration
+        storage_bucket_object = StorageBucketObject(
+            stack,
+            f"task_{self.task_id}",
+            name=f"{source_dir}_{hash}.zip",
+            bucket=cloud_storage_bucket.name,
+            source=f"{source_dir}.zip",
+        )
+
+        CloudfunctionsFunction(
+            stack,
+            f"function_{self.task_id}",
+            name=f"{self.dag.dag_id}-{self.task_id}",
+            description=self.description,
+            runtime="python37",
+            available_memory_mb=self.memory,
+            timeout=self.timeout,
+            service_account_email=os.environ["CLOUD_FUNCTIONS_SERVICE_ACCOUNT_EMAIL"],
+            source_archive_bucket=cloud_storage_bucket.name,
+            source_archive_object=storage_bucket_object.name,
+            event_trigger={
+                "event_type": "providers/cloud.pubsub/eventTypes/topic.publish",
+                "resource": trigger_resource
+            },
+            entry_point="cloudfunction_execution"
+        )
+
