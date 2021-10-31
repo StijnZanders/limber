@@ -24,14 +24,14 @@ class LimberTerraformStack(TerraformStack):
         self.folder = folder
 
         GoogleProvider(self, id=ns, region=region, project=project_id)
-
+        """
         self.storage_bucket = StorageBucket(
             self,
             "cloud_storage_bucket",
             name=cloud_storage_bucket,
             location=cloud_storage_bucket_location
         )
-
+        """
         self.get_secrets()
         self.create_terraform_configuration()
 
