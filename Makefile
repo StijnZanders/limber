@@ -10,4 +10,14 @@ build-pypi-package:
 deploy-to-pypi:
 	python -m twine upload --config-file .pypirc -r pypi dist/*
 install-locally:
-	python -m pip install -e D:limber\
+	python -m pip install -e ~/git/limber/
+
+limber-plan:
+	limber plan
+	terraform -chdir=terraform_plan init
+
+tf-plan:
+	terraform -chdir=terraform_plan plan -no-color
+
+tf-apply:
+	terraform -chdir=terraform_plan apply -auto-approve

@@ -21,18 +21,16 @@ with open ("README.md", "r") as readme:
 
 setuptools.setup(
     name="limber",
-    version="0.0.45",
+    version="0.1.4",
     entry_points={
             'console_scripts': ['limber=limber.__main__:cli'],
         },
     scripts=[],
     install_requires=[
-        "pyyaml==5.3.1",
-        "click==7.1.2",
-        "python-dotenv==0.15.0",
-        "google-cloud-pubsub==2.2.0",
+        "cdktf==0.7.0",
+        "click==8.0.3",
+        "google-cloud-pubsub==2.8.0",
         "google-cloud==0.34.0",
-        "mergedeep==1.3.1",
     ],
     author="Stijn Zanders",
     author_email="zandersstijn@gmail.com",
