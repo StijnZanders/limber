@@ -13,10 +13,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install -e .
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_wrapper: false
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
@@ -30,6 +26,8 @@ jobs:
         run: |
           cd limber
           cdktf get
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
       - name: Limber plan
         id: limber-plan
         run: make limber-plan
