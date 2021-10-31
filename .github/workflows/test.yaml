@@ -28,6 +28,8 @@ jobs:
           cdktf get
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Limber plan
         id: limber-plan
         run: make limber-plan
@@ -48,6 +50,7 @@ jobs:
             ${process.env.PLAN}
             \`\`\`\n
             </details>
+
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
             github.issues.createComment({
               issue_number: context.issue.number,

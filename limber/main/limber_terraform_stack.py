@@ -32,7 +32,7 @@ class LimberTerraformStack(TerraformStack):
             location=cloud_storage_bucket_location
         )
 
-        self.get_secrets()
+        #self.get_secrets()
         self.create_terraform_configuration()
 
     def get_secrets(self):

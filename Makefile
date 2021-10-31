@@ -18,3 +18,6 @@ limber-plan:
 
 tf-plan:
 	terraform -chdir=terraform_plan plan -no-color
+
+tf-apply:
+	terraform -chdir=terraform_plan apply -auto-approve

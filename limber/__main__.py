@@ -26,10 +26,6 @@ def load_environment_variables():
 
     os.environ["CLOUD_FUNCTIONS_SERVICE_ACCOUNT_EMAIL"] = yaml_config["cloud"]["cloud_functions_service_account"]
 
-    os.environ["TERRAFORM_ORGANIZATION"] = yaml_config["terraform"]["organization"]
-    os.environ["TERRAFORM_WORKSPACE"] = yaml_config["terraform"]["workspace"]
-    os.environ["TERRAFORM_SECRETS"] = json.dumps(yaml_config["terraform"]["secrets"])
-
 
 @cli.command("plan")
 def init():
@@ -59,6 +55,7 @@ def init():
     # Move the file to the right place
     shutil.move("terraform_plan/stacks/limber/cdk.tf.json", "terraform_plan/limber.tf.json")
     shutil.rmtree("terraform_plan/stacks")
+
 
 if __name__ == '__main__':
     cli()
