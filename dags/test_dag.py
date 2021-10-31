@@ -1,19 +1,19 @@
-from limber.main.dag.gcp import DAGGCP
-from limber.operators.python_operator.gcp import PythonOperatorGCP
+from limber.main.dag.dag import DAG
+from limber.operators.python_operator.python_operator import PythonOperator
 from plugins.test_utils import test, test_multiple_outputs, test_with_context
 
 default_args = {
 
 }
 
-test_dag = DAGGCP(
+test_dag = DAG(
     dag_id="test_dag",
     description="DAG that will for now just create a Google cloud scheduler",
     default_args=default_args,
     schedule_interval="0 * * * *"
 )
 
-test_task = PythonOperatorGCP(
+test_task = PythonOperator(
     dag=test_dag,
     task_id="test_task",
     description="Test task",
@@ -21,7 +21,7 @@ test_task = PythonOperatorGCP(
     op_kwargs={'arg': 'great test'}
 )
 
-test_task2 = PythonOperatorGCP(
+test_task2 = PythonOperator(
     dag=test_dag,
     task_id="test_task2",
     description="Test task2",
@@ -30,7 +30,7 @@ test_task2 = PythonOperatorGCP(
     memory=128
 )
 
-test_task3 = PythonOperatorGCP(
+test_task3 = PythonOperator(
     dag=test_dag,
     task_id="test_task3",
     description="Test task3",
