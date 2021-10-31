@@ -1,12 +1,10 @@
 import click
-from dotenv import load_dotenv
 import os
 import yaml
 import json
 from pathlib import Path
 from limber.main.limber_terraform_stack import LimberTerraformStack
 from cdktf import App
-load_dotenv()
 
 TERRAFORM_DIRECTORY = "terraform_plan"
 CONFIG_FILE = "limber.yaml"
