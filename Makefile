@@ -15,4 +15,4 @@ install-locally:
 tf-plan:
 	limber plan
 	terraform -chdir=cdktf.out/stacks/limber init
-	terraform -chdir=cdktf.out/stacks/limber plan
+	terraform -chdir=cdktf.out/stacks/limber plan -no-color
