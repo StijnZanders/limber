@@ -27,12 +27,11 @@ setuptools.setup(
         },
     scripts=[],
     install_requires=[
-        "pyyaml==5.3.1",
+        "cdktf==0.7.0",
         "click==7.1.2",
         "python-dotenv==0.15.0",
         "google-cloud-pubsub==2.2.0",
         "google-cloud==0.34.0",
-        "mergedeep==1.3.1",
     ],
     author="Stijn Zanders",
     author_email="zandersstijn@gmail.com",

@@ -1,5 +1,5 @@
-from limber.models.dag import DAG
-from limber.operators.python_operator import PythonOperator
+from limber.main.dag.dag import DAG
+from limber.operators.python_operator.gcp import PythonOperatorGCP
 from plugins.test_utils import test, test_multiple_outputs, test_with_context
 
 default_args = {
@@ -13,7 +13,7 @@ test_dag = DAG(
     schedule_interval="0 * * * *"
 )
 
-test_task = PythonOperator(
+test_task = PythonOperatorGCP(
     dag=test_dag,
     task_id="test_task",
     description="Test task",
@@ -21,7 +21,7 @@ test_task = PythonOperator(
     op_kwargs={'arg': 'great test'}
 )
 
-test_task2 = PythonOperator(
+test_task2 = PythonOperatorGCP(
     dag=test_dag,
     task_id="test_task2",
     description="Test task2",
@@ -30,7 +30,7 @@ test_task2 = PythonOperator(
     memory=128
 )
 
-test_task3 = PythonOperator(
+test_task3 = PythonOperatorGCP(
     dag=test_dag,
     task_id="test_task3",
     description="Test task3",

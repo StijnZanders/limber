@@ -1,5 +1,5 @@
 import os
-from ..models.operator import Operator
+from limber.operators.operator import Operator
 import inspect
 import shutil
 import hashlib
@@ -131,7 +131,7 @@ class PythonOperator(Operator):
         publish_future = publisher.publish(topic_path, data=message_bytes)
         publish_future.result()
 
-    def get_terraform_json(self, *, folder) -> {}:
+    def get_terraform_json_old(self, *, folder) -> {}:
 
         hash = self._write_cloud_function_code(folder=folder)
 

@@ -1,0 +1,14 @@
+{
+  "language": "python",
+  "app": "limber plan",
+  "terraformProviders": [
+    "hashicorp/google@~> 3.90"
+  ],
+  "terraformModules": [],
+  "codeMakerOutput": "imports",
+  "context": {
+    "excludeStackIdFromLogicalIds": "true",
+    "allowSepCharsInLogicalIds": "true"
+  },
+  "projectId": "38f14eb2-7ae4-472a-b9c6-39540b48da0f"
+}
