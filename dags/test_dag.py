@@ -1,4 +1,4 @@
-from limber.main.dag.dag import DAG
+from limber.main.dag.gcp import DAGGCP
 from limber.operators.python_operator.gcp import PythonOperatorGCP
 from plugins.test_utils import test, test_multiple_outputs, test_with_context
 
@@ -6,7 +6,7 @@ default_args = {
 
 }
 
-test_dag = DAG(
+test_dag = DAGGCP(
     dag_id="test_dag",
     description="DAG that will for now just create a Google cloud scheduler",
     default_args=default_args,

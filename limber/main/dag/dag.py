@@ -1,7 +1,6 @@
 from typing import Optional
 from datetime import timedelta
 import inspect
-from limber.imports.google import PubsubTopic, CloudSchedulerJob
 
 
 class DAG:
@@ -15,22 +14,3 @@ class DAG:
         _, filename, line, function, _, _ = inspect.stack()[1]
         self.filename = filename
 
-    def get_terraform_json(self, *, stack) -> {}:
-
-        topic = PubsubTopic(
-            stack,
-            f"dag_{self.dag_id}",
-            name=f"dag_{self.dag_id}"
-        )
-
-        CloudSchedulerJob(
-            stack,
-            f"job_{self.dag_id}",
-            name=self.dag_id,
-            description=self.description,
-            schedule=self.schedule_interval,
-            pubsub_target={
-                "topic_name": topic.id,
-                "data": "dGVzdA=="
-            }
-        )
