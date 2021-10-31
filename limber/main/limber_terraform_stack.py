@@ -70,7 +70,7 @@ class LimberTerraformStack(TerraformStack):
     def create_terraform_configuration(self):
 
         top_level_dags = self._get_objects(DAG)
-        self._get_terraform_configuration_dags(top_level_dags)
+        #self._get_terraform_configuration_dags(top_level_dags)
 
     def _get_terraform_configuration_dags(self, dags) -> None:
 
