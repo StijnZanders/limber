@@ -22,13 +22,8 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
       - name: Test Limber
-        run: make tf-plan
-      - name: Terraform init
-        id: init
-        run: terraform init
-      - name: Terraform plan
         id: plan
-        run: terraform plan
+        run: make tf-plan
         continue-on-error: true
       - name: Update Pull Request
         uses: actions/github-script@0.9.0
