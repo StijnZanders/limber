@@ -28,9 +28,8 @@ setuptools.setup(
     scripts=[],
     install_requires=[
         "cdktf==0.7.0",
-        "click==7.1.2",
-        "python-dotenv==0.15.0",
-        "google-cloud-pubsub==2.2.0",
+        "click==8.0.3",
+        "google-cloud-pubsub==2.8.0",
         "google-cloud==0.34.0",
     ],
     author="Stijn Zanders",
