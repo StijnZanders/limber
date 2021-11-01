@@ -24,10 +24,6 @@ jobs:
       - name: Setup cdktf
         run: |
           npm install --global cdktf-cli
-      - name: Get cdktf dependencies
-        run: |
-          cd limber
-          cdktf get
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
