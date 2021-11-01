@@ -18,13 +18,6 @@ jobs:
           python-version: 3.7
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Setup cdktf
-        run: |
-          npm install --global cdktf-cli
-      - name: Get cdktf dependencies
-        run: |
-          cd limber
-          cdktf get
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=target_branch;]$(echo ${GITHUB_REF#refs/heads/})"
