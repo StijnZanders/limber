@@ -21,7 +21,7 @@ with open ("README.md", "r") as readme:
 
 setuptools.setup(
     name="limber",
-    version="0.1.8",
+    version="0.1.9",
     entry_points={
             'console_scripts': ['limber=limber.__main__:cli'],
         },
@@ -39,6 +39,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/StijnZanders/limber",
     packages=setuptools.find_packages(),
+    package_data={'limber': ['imports/google/_jsii/hashicorp_google@0.0.0.jsii.tgz']},
+    include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache Software License",
